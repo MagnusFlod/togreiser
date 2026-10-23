@@ -1,0 +1,213 @@
+#!/usr/bin/env node
+// Brukes til å finne hvor node.js ligger i mappestrukturen
+// Node.js er et system som tillater å kjøre JavaScript uten at man må gå via en html eller ejs-fil
+
+/**
+ * Module dependencies.
+ */
+
+// ..går en mappe opp eller et steg tilbake i mappestien
+// Dette for å få tak i app.js-fila. Få tak i det app.js eksporterer og lagre resultatet i variabelen app
+// Express applikasjonen ligger ikke i www. Den henter applikasjonen fra app.js
+// app.js er på en måte selve kontrollsenteret fra det jeg husker på Noroff, så det er en viktig fil
+var app = require('../app');
+
+// require er en slags import som henter noe vi trenger
+// debug er en npm-pakke som brukes til debugging og logging
+// require('debug') returnerer en funksjon, som vi kaller umiddelbart
+// med 'togreiser:server' som argument. Dette lager en debug-instans
+// for serverdelen av applikasjonen.
+// Resultatet lagres i variabelen debug og kan brukes senere til debugging.
+var debug = require('debug')('togreiser:server');
+
+// Henter Node.js sin innebygde http-modul.
+// HTTP står for Hypertext Transfer Protocol og er en kommunikasjonsprotokoll som brukes mellom klient og server
+// API-forespørsler kan for eksempel sendes ved hjelp av HTTP
+// HTTP inneholder blant annet metoder som GET, POST, PUT og DELETE
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+// port er en variabel som lagrer returverdien fra funksjonskallet normalizePort()
+// Funksjonen kalles med verdien process.env.PORT || '3000'
+// process.env er Node.js sitt system for å lese miljøvariabler
+// PORT er navnet på miljøvariabelen vi forsøker å hente
+// Hvis PORT finnes, bruker vi verdien fra miljøet
+// Hvis PORT ikke finnes, bruker vi 3000 som standardverdi
+// Portnummeret forteller senere HTTP-serveren hvilken port den skal lytte på
+// Eksempel: http://localhost:3000
+var port = normalizePort(process.env.PORT || '3000');
+
+// app er Express-applikasjonen som ble hentet fra app.js
+// app.set() brukes til å lagre en konfigurasjonsverdi på Express-applikasjonen
+// 'port' er navnet på konfigurasjonsverdien
+// port er variabelen som inneholder portnummeret vi bestemte tidligere
+// Vi lagrer dette slik at portkonfigurasjonen kan brukes av applikasjonen senere
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+// Lager variabelen server
+// http inneholder Node.js sin innebygde http-modul
+// createServer() er en funksjon fra http-modulen som oppretter en HTTP-server
+// Express-applikasjonen app sendes inn som argument og brukes til å håndtere forespørsler
+// Returverdien fra createServer() lagres i variabelen server
+var server = http .createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+// Vi bruker variabelen server, som inneholder HTTP-serveren vi opprettet tidligere
+// listen() er en metode som starter serveren slik at den kan lytte etter innkommende forbindelser
+// port sendes inn som argument og forteller serveren hvilken port den skal lytte på
+server.listen(port);
+
+// .on() brukes til å registrere en funksjon som skal håndtere en bestemt hendelse
+// Her lytter serveren etter 'error'-hendelsen
+// En feil kan for eksempel oppstå hvis porten allerede brukes av en annen prosess
+// Hvis en 'error' oppstår, kalles funksjonen onError()
+// onError sendes inn som callback/event handler og kjøres først når hendelsen oppstår
+server.on('error', onError);
+
+// Når serveren har startet og lykkes med å begynne å lytte på porten, trigges 'listening'-eventet og onListening-funksjonen kjøres
+// Serveren fortsetter deretter å lytte etter HTTP-forespørsler
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+// Denne funksjonen kalles i port-variabelen lenger opp
+function normalizePort(value)
+{
+  // Forsøker å konvertere value til et heltall
+  // 10 angir at verdien skal tolkes som et tall i titallsystemet
+  // Dette er nødvendig fordi PORT fra miljøet vanligvis kommer som en streng
+  var port = parseInt(value, 10);
+
+  // Hvis verdien ikke kan konverteres til et tall
+  if (isNaN(port))
+  {
+    // Returnerer den opprinnelige verdien
+    // Dette kan for eksempel være en named pipe
+    return value;
+  }
+
+  // Hvis porten er større enn eller lik 0
+  if (port >= 0)
+  {
+    // så er alt i orden og portnummeret returneres
+    return port;
+  }
+
+  // Returner false hvis tallet til port er negativt
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+// Denne funksjonen sendes inn som callback til server.on('error', onError)
+// Hvis noe er feil, så kjøres denne funksjonen
+// error er da parameteren og parameteren får et error-objekt som brukes i denne funksjonen
+function onError(error)
+{
+  // Hvis error-propertien syscall ikke er strengen 'listen'?
+  if (error.syscall !== 'listen')
+  {
+    // Kast error. Dette er ikke riktig type error som denne funksjonen skal kjøre
+    // Kast error videre fordi dette ikke er en feil som denne funksjonen håndterer
+    throw error;
+  }
+
+
+  // Hvis port er av datatypen streng
+  var bind = typeof port === 'string'
+  // ValueIfTrue
+  // Hvis betingelsen er sann, hvis port er en streng, bruk det som kommer etter ?
+  // Lag teksten 'Pipe' + port
+    ? 'Pipe ' + port
+  // ValueIfFalse
+  // Hvis betingelsen er usann, hvis port IKKE er en streng
+  // Lag teksten 'Port' + port;
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  // Finner code-propertien til error-objektet
+  // Hvilken verdi har error.code?
+  switch (error.code)
+  {
+    // Hvis error.code er EACCES
+    // Sagt på en annen måte, 'In case' code har verdien 'EACCES'
+    case 'EACCES':
+      // EACESS har i dette tilfellet ikke nødvendige rettigheter til å bruke den aktuelle porten
+      // console.error skriver da en feilmelding
+      // F.eks Port 80 requires elevated privileges
+      console.error(bind + ' requires elevated privileges');
+      // Avslutter node prosessen
+      // (0) brukes vanligvis for normal avslutning
+      // (1) i dette tilfellet indikerer at prosessen ble avsluttet som følge av en feil
+      process.exit(1);
+      // Ferdig med hele case-blokken. Hopp ut. Den går ikke videre til neste case
+      break;
+
+    // Hvis case er 'EADDRINUSE' så er adressen/porten allerede i bruk
+    case 'EADDRINUSE':
+      // Feilmelding skriver da hva det gjelder
+      console.error(bind + ' is already in use');
+      // Prosessen avsluttes og avbryter programmet
+      process.exit(1);
+      // Avbryter case-blokken og hopper ut
+      break;
+    // Hvis feilkoden ikke er en av de spesifikke feilene vi håndterer,
+    // kastes feilen videre
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+// Kjøres når serveren har startet og begynner å lytte
+function onListening()
+{
+  // Oppretter variabel addr
+  // server opprettet vi tidligere. var server = http.createServer(app);
+  // address(); er en metode på server-objektet
+  // Når vi skriver server.address ber vi serveren om hvilken adresse/port serveren skal lytte på
+  /* Resultatet kan være et objekt som f.eks
+  {
+    address: '::',
+    family: 'IPv6',
+    port: 3000
+  } */
+  // addr inneholder da informasjon om serverens adresse
+  var addr = server.address();
+
+  // Ny ternary operator
+  // Er addr en streng?
+  var bind = typeof addr === 'string'
+  // Hvis ja, lages en tekst som begynner med pipe og legger til innholdet i addr
+    ? 'pipe ' + addr
+
+  // Hvis nei, lages en tekst som begynner med port
+  // Så henter den addr.port
+  // Hvis addr.port har en verdi av 3000, så blir 'port ' + addr.port til port 3000
+    : 'port ' + addr.port;
+
+  // Her bruker vi debug-funksjonen vi hentet i starten. var debug = require('debug')('togreiser:server');
+  // Vi sender inn tekst. Hvis bind = 'port 3000' blir argumentet 'Listening on ' + bind til Listening on port 3000
+  // debug() skriver en debug-melding som forteller oss hvilken adresse/server-binding Node har startet på
+  debug('Listening on ' + bind);
+}
+
+// Hovedoppgaven til bin/www er å lage en kobling mellom app.js og porten
+// Dette skjer i hovedsak via var server = http .createServer(app);

@@ -1,0 +1,35 @@
+{
+  "data":
+  [
+    {
+      "trainNumber": "100",
+      "type": "Type72",
+      "lengthMeters": 200
+    },
+    {
+      "trainNumber": "101",
+      "type": "Type72",
+      "lengthMeters": 200
+    },
+    {
+      "trainNumber": "103",
+      "type": "Type72",
+      "lengthMeters": 200
+    },
+    {
+      "trainNumber": "104",
+      "type": "Type72",
+      "lengthMeters": 200
+    },
+    {
+      "trainNumber": "105",
+      "type": "Type72",
+      "lengthMeters": 200
+    },
+    {
+      "trainNumber": "106",
+      "type": "Type72",
+      "lengthMeters": 200
+    }
+  ]
+}
