@@ -4,32 +4,38 @@
     {
       "trainNumber": "100",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     },
     {
       "trainNumber": "101",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     },
     {
       "trainNumber": "103",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     },
     {
       "trainNumber": "104",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     },
     {
       "trainNumber": "105",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     },
     {
       "trainNumber": "106",
       "type": "Type72",
-      "lengthMeters": 200
+      "lengthMeters": 200,
+      "isElectric": true
     }
   ]
 }

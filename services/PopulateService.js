@@ -37,19 +37,21 @@ class PopulateService
     async isPopulated()
     {
         // If one table already has rows, it's already populated. 0 rows = 0 data. 1 or more rows = data
-        const result = await this.Train.count() && await this.User.count();
+        const trainCount = await this.Train.count();
+        const userCount = await this.User.count();
         // If the result of counting rows is greater than 0, the function returns a truthy-value
-        return result !== 0;
+        return trainCount > 0 && userCount > 0;
     }
 
 
-    async postData({ trainNumber, type, lengthMeters })
+    async postData({ trainNumber, type, lengthMeters, isElectric })
     {
         return this.Train.create
         ({
             trainNumber: trainNumber,
             type: type,
-            lengthMeters: lengthMeters
+            lengthMeters: lengthMeters,
+            isElectric: isElectric
         });
     }
 
