@@ -19,6 +19,11 @@ module.exports = (sequelize, Sequelize) =>
             {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false
+            },
+            'isElectric':
+            {
+                type: Sequelize.DataTypes.BOOLEAN,
+                allowNull: false
             }
         }
     );
