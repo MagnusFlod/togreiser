@@ -20,6 +20,7 @@ var db = require('./models');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var populateRouter = require('./routes/populate');
+var trainsRouter = require('./routes/trains');
 
 // Kaller funksjonen express() og lagrer det express returnerer i app
 // app inneholder da Express-applikasjonen som funksjonen opprettet
@@ -65,6 +66,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/populate', populateRouter);
+app.use('/trains', trainsRouter);
 
 // Eksporterer den konfigurerte Express-applikasjonen,
 // slik at andre filer kan importere og bruke den.

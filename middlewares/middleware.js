@@ -46,6 +46,23 @@ module.exports =
         {
             return res.status(403).json({ message: 'You do not have access to this user' });
         }
+    },
+
+    isAdmin: function(req, res, next)
+    {
+        if(!req.user)
+        {
+            return res.status(401).json({ message: 'Authentication required' });
+        }
+
+        const requestedUserRole = req.user.role;
+
+        if(requestedUserRole === 'admin')
+        {
+            return next();
+        }
+
+        return res.status(403).json({ message: 'You do not have admin rights' });
     }
     
 }
