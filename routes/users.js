@@ -183,5 +183,27 @@ router.post('/login', async function(req, res, next)
     });
 });
 
+router.delete('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const deletedUser = await userService.deleteUser(id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": { "result": "User successfully deleted" }, deletedUser });
+    }
+    catch(err)
+    {
+        return res.status(500).json
+        ({
+            status: 'error',
+            statuscode: 500,
+            message: 'Failed to delete user.'
+        });
+    }
+});
+
 
 module.exports = router;

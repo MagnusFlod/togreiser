@@ -14,6 +14,12 @@
       "isElectric": true
     },
     {
+      "trainNumber": "102",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
       "trainNumber": "103",
       "type": "Type72",
       "lengthMeters": 200,
@@ -27,12 +33,6 @@
     },
     {
       "trainNumber": "105",
-      "type": "Type72",
-      "lengthMeters": 200,
-      "isElectric": true
-    },
-    {
-      "trainNumber": "106",
       "type": "Type72",
       "lengthMeters": 200,
       "isElectric": true

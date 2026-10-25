@@ -1,3 +1,5 @@
+const { where } = require("sequelize");
+
 class UserService
 {
     constructor(db)
@@ -47,6 +49,14 @@ class UserService
         return this.User.findOne
         ({
             where: { username: username }
+        });
+    }
+
+    async deleteUser(id)
+    {
+        return this.User.destroy
+        ({
+            where: { id: id }
         });
     }
 }
