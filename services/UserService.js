@@ -52,6 +52,30 @@ class UserService
         });
     }
 
+    async updateUser({ id, username, email })
+    {
+        return this.User.update
+        ({
+            username: username,
+            email: email
+        },
+        {
+            where: { id: id }
+        });
+    }
+
+    async updatePassword({ id, password, salt})
+    {
+        return this.User.update
+        ({
+            password: password,
+            salt: salt
+        },
+        {
+            where: { id: id }
+        });
+    }
+
     async deleteUser(id)
     {
         return this.User.destroy

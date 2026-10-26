@@ -7,7 +7,7 @@ const UserService = require('../services/UserService');
 const db = require('../models');
 const userService = new UserService(db);
 
-/* GET users listing. */
+
 router.get('/', async function(req, res, next)
 {
   try
@@ -181,6 +181,80 @@ router.post('/login', async function(req, res, next)
         }
 
     });
+});
+
+router.put('/change-password/:id', isAuthenticated, isAuthorized, async function(req, res, next)
+{
+    
+    const { password } = req.body;
+
+    const id = req.params.id;
+
+    if(!password)
+    {
+        return res.status(400).json
+        ({
+            message: 'New password is required'
+        });
+    }
+
+    var salt = crypto.randomBytes(16);
+
+    const saltHex = salt.toString('hex');
+
+    crypto.pbkdf2(password, salt, 310000, 32, 'sha256',
+        async function(err, hashedPassword)
+        {
+            if (err)
+            {
+                return next(err);
+            }
+
+            try
+            {
+
+                const updatedPassword = await userService.updatePassword
+                ({
+                    id: id,
+                    password: hashedPassword.toString('hex'),
+                    salt: saltHex
+                });
+
+                if(updatedPassword[0] === 0)
+                {
+                    return res.status(404).json
+                    ({
+                        message: 'User not found'
+                    });
+                }
+
+                return res.status(201).json
+                ({
+                    message: 'Password was successfully changed!'
+                });
+            }
+            catch (err)
+            {
+                return next(err);
+            }
+        }
+    );
+});
+
+router.put('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const { username, email } = req.body;
+
+        const updatedUser = await userService.updateUser(id)
+    }
+    catch(err)
+    {
+
+    }
 });
 
 router.delete('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
