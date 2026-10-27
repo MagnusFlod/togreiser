@@ -52,6 +52,14 @@ class UserService
         });
     }
 
+    async getUserByEmail(email)
+    {
+        return this.User.findOne
+        ({
+            where: { email: email }
+        });
+    }
+
     async updateUser({ id, username, email })
     {
         return this.User.update

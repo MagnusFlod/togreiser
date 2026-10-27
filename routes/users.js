@@ -5,6 +5,7 @@ var router = express.Router();
 const { isAuthenticated, isAuthorized } = require('../middlewares/middleware.js');
 const UserService = require('../services/UserService');
 const db = require('../models');
+const { where } = require('sequelize');
 const userService = new UserService(db);
 
 
@@ -183,6 +184,7 @@ router.post('/login', async function(req, res, next)
     });
 });
 
+
 router.put('/change-password/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 {
     
@@ -241,6 +243,107 @@ router.put('/change-password/:id', isAuthenticated, isAuthorized, async function
     );
 });
 
+
+router.post('/forgot-password', async function(req, res, next)
+{
+    try
+    {
+
+        const { email } = req.body;
+
+        const foundUser = await userService.getUserByEmail(email);
+
+        if(foundUser === null)
+        {
+            return res.status(404).json({ message: 'email not found' });
+        }
+
+        let token = jwt.sign
+        (
+            { id: foundUser.id, purpose: 'password-reset' },
+            process.env.TOKEN_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        return res.status(200).json
+        ({
+            message: 'Password reset token generated successfully!',
+            token: token
+        });
+
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
+router.post('/reset-password', async function(req, res, next)
+{
+    try
+    {
+        const { token, password } = req.body;
+
+        if(!password)
+        {
+            return res.status(400).json
+            ({
+                message: 'missing password!'
+            });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+
+        if(decodedToken.purpose !== 'password-reset')
+        {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        const id = decodedToken.id;
+
+        var salt = crypto.randomBytes(16);
+
+        const saltHex = salt.toString('hex');
+
+        crypto.pbkdf2(password, salt, 310000, 32, 'sha256',
+        async function(err, hashedPassword)
+        {
+            if(err)
+            {
+                return next(err);
+            }
+            
+            const updatedPassword = await userService.updatePassword
+            ({
+                id: id,
+                password: hashedPassword.toString('hex'),
+                salt: saltHex
+            });
+
+            if(updatedPassword[0] === 0)
+            {
+                return res.status(404).json
+                ({
+                    message: 'User not found'
+                });
+            }
+
+            return res.status(201).json
+            ({
+                message: 'Password was successfully reset!'
+            });
+            
+            
+        });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
 router.put('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 {
     try
@@ -256,6 +359,7 @@ router.put('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 
     }
 });
+
 
 router.delete('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 {
