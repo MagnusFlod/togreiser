@@ -1,5 +1,3 @@
-const { where } = require("sequelize");
-
 class TrainService
 {
     constructor(db)

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const trainData = require('../trainData.json');
+const stationData = require('../stationData.json');
 const { promisify } = require('node:util');
 const UserService = require('../services/UserService');
 const pbkdf2Async = promisify(crypto.pbkdf2);
@@ -11,6 +12,7 @@ class PopulateService
         this.Train = db.train;
         this.User = db.user;
         this.userService = new UserService(db);
+        this.Station = db.station;
     }
 
     async populate()
@@ -25,11 +27,21 @@ class PopulateService
 
         for(let i = 0; i < trainData.data.length; i++)
         {
-            await this.postData
+            await this.postTrains
             ({
                 trainNumber: trainData.data[i].trainNumber,
                 type: trainData.data[i].type,
                 lengthMeters: trainData.data[i].lengthMeters
+            });
+        }
+
+        for(let i = 0; i < stationData.data.length; i++)
+        {
+            await this.postStations
+            ({
+                name: stationData.data[i].name,
+                platforms: stationData.data[i].platforms,
+                city: stationData.data[i].city
             });
         }
     }
@@ -39,12 +51,13 @@ class PopulateService
         // If one table already has rows, it's already populated. 0 rows = 0 data. 1 or more rows = data
         const trainCount = await this.Train.count();
         const userCount = await this.User.count();
+        const stationCount = await this.Station.count();
         // If the result of counting rows is greater than 0, the function returns a truthy-value
-        return trainCount > 0 && userCount > 0;
+        return trainCount > 0 && userCount > 0 && stationCount > 0;
     }
 
 
-    async postData({ trainNumber, type, lengthMeters, isElectric })
+    async postTrains({ trainNumber, type, lengthMeters, isElectric })
     {
         return this.Train.create
         ({
@@ -81,6 +94,16 @@ class PopulateService
             saltHex,
             'admin'
         );
+    }
+
+    async postStations({ name, platforms, city })
+    {
+        return this.Station.create
+        ({
+            name: name,
+            platforms: platforms,
+            city: city
+        });
     }
 }
 
