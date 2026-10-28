@@ -5,7 +5,6 @@ var router = express.Router();
 const { isAuthenticated, isAuthorized } = require('../middlewares/middleware.js');
 const UserService = require('../services/UserService');
 const db = require('../models');
-const { where } = require('sequelize');
 const userService = new UserService(db);
 
 
@@ -352,11 +351,26 @@ router.put('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 
         const { username, email } = req.body;
 
-        const updatedUser = await userService.updateUser(id)
+
+        const updatedUser = await userService.updateUser
+        ({
+            id,
+            username,
+            email
+        });
+
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": { "result": "User successfully updated"}, updatedUser });
     }
     catch(err)
     {
-
+        return res.status(500).json
+        ({
+            status: 'error',
+            statuscode: 500,
+            message: 'Failed to update user'
+        });
     }
 });
 

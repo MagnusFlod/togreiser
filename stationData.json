@@ -1,0 +1,50 @@
+{
+  "data":
+  [
+    {
+      "name": "Eidsvoll",
+      "platforms": "4",
+      "city": "Eidsvoll"
+    },
+    {
+      "name": "Gardermoen",
+      "platforms": "4",
+      "city": "Jessheim"
+    },
+    {
+      "name": "Lillestrøm",
+      "platforms": "8",
+      "city": "Lillestrøm"
+    },
+    {
+      "name": "Oslo S",
+      "platforms": "10",
+      "city": "Oslo"
+    },
+    {
+      "name": "Nationalteateret",
+      "platforms": "4",
+      "city": "Oslo"
+    },
+    {
+      "name": "Skøyen",
+      "platforms": "4",
+      "city": "Oslo"
+    },
+    {
+      "name": "Lysaker",
+      "platforms": "4",
+      "city": "Bærum"
+    },
+    {
+      "name": "Sandvika",
+      "platforms": "4",
+      "city": "Bærum"
+    },
+    {
+      "name": "Asker",
+      "platforms": "4",
+      "city": "Bærum"
+    }
+  ]
+}
