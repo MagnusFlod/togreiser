@@ -31,7 +31,8 @@ class PopulateService
             ({
                 trainNumber: trainData.data[i].trainNumber,
                 type: trainData.data[i].type,
-                lengthMeters: trainData.data[i].lengthMeters
+                lengthMeters: trainData.data[i].lengthMeters,
+                isElectric: trainData.data[i].isElectric
             });
         }
 
@@ -52,7 +53,7 @@ class PopulateService
         const trainCount = await this.Train.count();
         const userCount = await this.User.count();
         const stationCount = await this.Station.count();
-        // If the result of counting rows is greater than 0, the function returns a truthy-value
+        // The database is populated only if all three tables contain data
         return trainCount > 0 && userCount > 0 && stationCount > 0;
     }
 
@@ -86,14 +87,24 @@ class PopulateService
             'sha256'
         );
 
-        await this.userService.create
-        (
-            username,
-            email,
-            hashedPassword.toString('hex'),
-            saltHex,
-            'admin'
-        );
+        try
+        {
+            await this.userService.create
+            (
+                username,
+                email,
+                hashedPassword.toString('hex'),
+                saltHex,
+                'admin'
+            );
+        }
+        catch(error)
+        {
+            console.error("Admin creation failed:");
+            console.error("SQL message:", error.original?.sqlMessage);
+            console.error("SQL code:", error.original?.code);
+            throw error;
+        }
     }
 
     async postStations({ name, platforms, city })

@@ -12,7 +12,7 @@ router.get('/', isAuthenticated, async function(req, res, next)
         const trains = await trainService.getTrains();
 
         return res.status(200).json({ "status": "success", "statuscode": 200,
-        "datda": {"result": "Here is train data"}, trains });
+        "data": {"result": "Here is train data"}, trains });
     }
     catch(err)
     {
@@ -31,7 +31,7 @@ router.get('/:id', isAuthenticated, async function(req, res, next)
         const train = await trainService.getOneTrain(id);
 
         return res.status(200).json({ "status": "success", "statuscode": 200,
-        "datda": {"result": "Here is train data for one train"}, train });
+        "data": {"result": "Here is train data for one train"}, train });
     }
     catch(err)
     {
@@ -52,7 +52,7 @@ router.post('/', isAuthenticated, isAdmin, async function(req, res, next)
         });
 
         return res.status(200).json({ "status": "success", "statuscode": 200,
-        "datda": {"result": "Train successfully created"}, train });
+        "data": {"result": "Train successfully created"}, train });
     }
     catch(err)
     {

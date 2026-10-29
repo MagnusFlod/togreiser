@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 var express = require('express');
 var router = express.Router();
-const { isAuthenticated, isAuthorized } = require('../middlewares/middleware.js');
+const { isAuthenticated, isAuthorized, isAdmin } = require('../middlewares/middleware.js');
 const UserService = require('../services/UserService');
 const db = require('../models');
 const userService = new UserService(db);
@@ -376,6 +376,28 @@ router.put('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
 
 
 router.delete('/:id', isAuthenticated, isAuthorized, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const deletedUser = await userService.deleteUser(id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": { "result": "User successfully deleted" }, deletedUser });
+    }
+    catch(err)
+    {
+        return res.status(500).json
+        ({
+            status: 'error',
+            statuscode: 500,
+            message: 'Failed to delete user.'
+        });
+    }
+});
+
+router.delete('/:id', isAuthenticated, isAdmin, async function(req, res, next)
 {
     try
     {
