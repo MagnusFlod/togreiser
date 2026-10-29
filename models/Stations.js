@@ -23,5 +23,13 @@ module.exports = (sequelize, Sequelize) =>
         }
     );
 
+    station.associate = function(models)
+    {
+        station.hasMany(models.journeyStop,
+        {
+            foreignKey: 'stationId'
+        });
+    };
+
     return station;
 }

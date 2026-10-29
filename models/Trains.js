@@ -27,6 +27,14 @@ module.exports = (sequelize, Sequelize) =>
             }
         }
     );
+    
+    train.associate = function(models)
+    {
+        train.hasMany(models.journey,
+        {
+            foreignKey: 'trainId'
+        });
+    };
 
     return train;
 }

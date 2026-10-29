@@ -1,0 +1,101 @@
+{
+  "data":
+  [
+    {
+      "trainId": 1,
+      "journeyDate": "2026-11-02T06:00:00"
+    },
+    {
+      "trainId": 1,
+      "journeyDate": "2026-11-03T06:00:00"
+    },
+    {
+      "trainId": 1,
+      "journeyDate": "2026-11-04T06:00:00"
+    },
+    {
+      "trainId": 1,
+      "journeyDate": "2026-11-05T06:00:00"
+    },
+    {
+        "trainId": 1,
+      "journeyDate": "2026-11-06T06:00:00"
+    },
+    {
+      "trainId": 2,
+      "journeyDate": "2026-11-02T07:00:00"
+    },
+    {
+      "trainId": 2,
+      "journeyDate": "2026-11-03T07:00:00"
+    },
+    {
+      "trainId": 2,
+      "journeyDate": "2026-11-04T07:00:00"
+    },
+    {
+      "trainId": 2,
+      "journeyDate": "2026-11-05T07:00:00"
+    },
+    {
+      "trainId": 2,
+      "journeyDate": "2026-11-06T07:00:00"
+    },
+    {
+      "trainId": 3,
+      "journeyDate": "2026-11-02T08:00:00"
+    },
+    {
+      "trainId": 3,
+      "journeyDate": "2026-11-03T08:00:00"
+    },
+    {
+      "trainId": 3,
+      "journeyDate": "2026-11-04T08:00:00"
+    },
+    {
+      "trainId": 3,
+      "journeyDate": "2026-11-05T08:00:00"
+    },
+    {
+      "trainId": 3,
+      "journeyDate": "2026-11-06T08:00:00"
+    },
+    {
+      "trainId": 4,
+      "journeyDate": "2026-11-02T09:00:00"
+    },
+    {
+      "trainId": 4,
+      "journeyDate": "2026-11-03T09:00:00"
+    },
+    {
+      "trainId": 4,
+      "journeyDate": "2026-11-04T09:00:00"
+    },
+    {
+      "trainId": 4,
+      "journeyDate": "2026-11-05T09:00:00"
+    },
+    {
+      "trainId": 4,
+      "journeyDate": "2026-11-06T09:00:00"
+    },
+    {
+      "trainId": 5,
+      "journeyDate": "2026-11-07T10:00:00"
+    },
+    {
+      "trainId": 5,
+      "journeyDate": "2026-11-08T10:00:00"
+    },
+    {
+      "trainId": 6,
+      "journeyDate": "2026-11-07T11:00:00"
+    },
+    {
+      "trainId": 6,
+      "journeyDate": "2026-11-08T11:00:00"
+    }
+  ]
+}
