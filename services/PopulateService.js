@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const trainData = require('../trainData.json');
 const stationData = require('../stationData.json');
+const journeyData = require('../journeyData.json');
 const { promisify } = require('node:util');
 const UserService = require('../services/UserService');
 const pbkdf2Async = promisify(crypto.pbkdf2);
@@ -13,6 +14,7 @@ class PopulateService
         this.User = db.user;
         this.userService = new UserService(db);
         this.Station = db.station;
+        this.Journey = db.journey;
     }
 
     async populate()
@@ -45,6 +47,15 @@ class PopulateService
                 city: stationData.data[i].city
             });
         }
+
+        for(let i = 0; i < journeyData.data.length; i++)
+        {
+            await this.postJourneys
+            ({
+                trainId: journeyData.data[i].trainId,
+                journeyDate: journeyData.data[i].journeyDate
+            });
+        }
     }
   
     async isPopulated()
@@ -53,8 +64,9 @@ class PopulateService
         const trainCount = await this.Train.count();
         const userCount = await this.User.count();
         const stationCount = await this.Station.count();
+        const journeyCount = await this.Journey.count();
         // The database is populated only if all three tables contain data
-        return trainCount > 0 && userCount > 0 && stationCount > 0;
+        return trainCount > 0 && userCount > 0 && stationCount > 0 && journeyCount > 0;
     }
 
 
@@ -114,6 +126,15 @@ class PopulateService
             name: name,
             platforms: platforms,
             city: city
+        });
+    }
+
+    async postJourneys({ trainId, journeyDate })
+    {
+        return this.Journey.create
+        ({
+            trainId: trainId,
+            journeyDate: journeyDate
         });
     }
 }

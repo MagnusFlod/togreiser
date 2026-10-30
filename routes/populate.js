@@ -9,9 +9,22 @@ router.post('/', async function(req, res, next)
 {
     try
     {
-        const initialPopulation = await populateService.populate();
+        const alreadyPopulated = await populateService.isPopulated();
 
-        return res.status(200).json({ message: 'Successfully populated initial data' });
+        if(alreadyPopulated)
+        {
+            return res.status(409).json(
+            {
+                message: 'Database is already populated'
+            });
+        }
+
+        await populateService.populate();
+
+        return res.status(200).json(
+        {
+            message: 'Successfully populated initial data'
+        });
     }
     catch(err)
     {

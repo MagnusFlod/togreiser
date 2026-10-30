@@ -1,0 +1,320 @@
+{
+  "data":
+  [
+    {
+      "journeyId": 1,
+      "stationId": 1,
+      "stopSequence": 1,
+      "arrivalTime": "2026-11-02T06:00:00",
+      "departureTime": "2026-11-02T06:00:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 2,
+      "stopSequence": 2,
+      "arrivalTime": "2026-11-02T06:10:00",
+      "departureTime": "2026-11-02T06:15:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 3,
+      "stopSequence": 3,
+      "arrivalTime": "2026-11-02T06:27:00",
+      "departureTime": "2026-11-02T06:30:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 4,
+      "stopSequence": 4,
+      "arrivalTime": "2026-11-02T06:40:00",
+      "departureTime": "2026-11-02T06:43:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 5,
+      "stopSequence": 5,
+      "arrivalTime": "2026-11-02T06:45:00",
+      "departureTime": "2026-11-02T06:47:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 6,
+      "stopSequence": 6,
+      "arrivalTime": "2026-11-02T06:50:00",
+      "departureTime": "2026-11-02T06:52:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 7,
+      "stopSequence": 7,
+      "arrivalTime": "2026-11-02T06:54:00",
+      "departureTime": "2026-11-02T06:56:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 8,
+      "stopSequence": 8,
+      "arrivalTime": "2026-11-02T07:02:00",
+      "departureTime": "2026-11-02T07:04:00"
+    },
+    {
+      "journeyId": 1,
+      "stationId": 9,
+      "stopSequence": 9,
+      "arrivalTime": "2026-11-02T07:12:00",
+      "departureTime": "2026-11-02T07:30:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 1,
+      "stopSequence": 1,
+      "arrivalTime": "2026-11-03T06:00:00",
+      "departureTime": "2026-11-03T06:00:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 2,
+      "stopSequence": 2,
+      "arrivalTime": "2026-11-03T06:10:00",
+      "departureTime": "2026-11-03T06:15:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 3,
+      "stopSequence": 3,
+      "arrivalTime": "2026-11-03T06:27:00",
+      "departureTime": "2026-11-03T06:30:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 4,
+      "stopSequence": 4,
+      "arrivalTime": "2026-11-03T06:40:00",
+      "departureTime": "2026-11-03T06:43:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 5,
+      "stopSequence": 5,
+      "arrivalTime": "2026-11-03T06:45:00",
+      "departureTime": "2026-11-03T06:47:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 6,
+      "stopSequence": 6,
+      "arrivalTime": "2026-11-03T06:50:00",
+      "departureTime": "2026-11-03T06:52:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 7,
+      "stopSequence": 7,
+      "arrivalTime": "2026-11-03T06:54:00",
+      "departureTime": "2026-11-03T06:56:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 8,
+      "stopSequence": 8,
+      "arrivalTime": "2026-11-03T07:02:00",
+      "departureTime": "2026-11-03T07:04:00"
+    },
+    {
+      "journeyId": 2,
+      "stationId": 9,
+      "stopSequence": 9,
+      "arrivalTime": "2026-11-03T07:12:00",
+      "departureTime": "2026-11-03T07:30:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 1,
+      "stopSequence": 1,
+      "arrivalTime": "2026-11-04T06:00:00",
+      "departureTime": "2026-11-04T06:00:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 2,
+      "stopSequence": 2,
+      "arrivalTime": "2026-11-04T06:10:00",
+      "departureTime": "2026-11-04T06:15:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 3,
+      "stopSequence": 3,
+      "arrivalTime": "2026-11-04T06:27:00",
+      "departureTime": "2026-11-04T06:30:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 4,
+      "stopSequence": 4,
+      "arrivalTime": "2026-11-04T06:40:00",
+      "departureTime": "2026-11-04T06:43:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 5,
+      "stopSequence": 5,
+      "arrivalTime": "2026-11-04T06:45:00",
+      "departureTime": "2026-11-04T06:47:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 6,
+      "stopSequence": 6,
+      "arrivalTime": "2026-11-04T06:50:00",
+      "departureTime": "2026-11-04T06:52:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 7,
+      "stopSequence": 7,
+      "arrivalTime": "2026-11-04T06:54:00",
+      "departureTime": "2026-11-04T06:56:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 8,
+      "stopSequence": 8,
+      "arrivalTime": "2026-11-04T07:02:00",
+      "departureTime": "2026-11-04T07:04:00"
+    },
+    {
+      "journeyId": 3,
+      "stationId": 9,
+      "stopSequence": 9,
+      "arrivalTime": "2026-11-04T07:12:00",
+      "departureTime": "2026-11-04T07:30:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 1,
+     "stopSequence": 1,
+     "arrivalTime": "2026-11-05T06:00:00",
+     "departureTime": "2026-11-05T06:00:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 2,
+     "stopSequence": 2,
+     "arrivalTime": "2026-11-05T06:10:00",
+     "departureTime": "2026-11-05T06:15:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 3,
+     "stopSequence": 3,
+     "arrivalTime": "2026-11-05T06:27:00",
+     "departureTime": "2026-11-05T06:30:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 4,
+     "stopSequence": 4,
+     "arrivalTime": "2026-11-05T06:40:00",
+     "departureTime": "2026-11-05T06:43:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 5,
+     "stopSequence": 5,
+     "arrivalTime": "2026-11-05T06:45:00",
+     "departureTime": "2026-11-05T06:47:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 6,
+     "stopSequence": 6,
+     "arrivalTime": "2026-11-05T06:50:00",
+     "departureTime": "2026-11-05T06:52:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 7,
+     "stopSequence": 7,
+     "arrivalTime": "2026-11-05T06:54:00",
+     "departureTime": "2026-11-05T06:56:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 8,
+     "stopSequence": 8,
+     "arrivalTime": "2026-11-05T07:02:00",
+     "departureTime": "2026-11-05T07:04:00"
+    },
+    {
+     "journeyId": 4,
+     "stationId": 9,
+     "stopSequence": 9,
+     "arrivalTime": "2026-11-05T07:12:00",
+     "departureTime": "2026-11-05T07:30:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 1,
+    "stopSequence": 1,
+    "arrivalTime": "2026-11-06T06:00:00",
+    "departureTime": "2026-11-06T06:00:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 2,
+    "stopSequence": 2,
+    "arrivalTime": "2026-11-06T06:10:00",
+    "departureTime": "2026-11-06T06:15:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 3,
+    "stopSequence": 3,
+    "arrivalTime": "2026-11-06T06:27:00",
+    "departureTime": "2026-11-06T06:30:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 4,
+    "stopSequence": 4,
+    "arrivalTime": "2026-11-06T06:40:00",
+    "departureTime": "2026-11-06T06:43:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 5,
+    "stopSequence": 5,
+    "arrivalTime": "2026-11-06T06:45:00",
+    "departureTime": "2026-11-06T06:47:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 6,
+    "stopSequence": 6,
+    "arrivalTime": "2026-11-06T06:50:00",
+    "departureTime": "2026-11-06T06:52:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 7,
+    "stopSequence": 7,
+    "arrivalTime": "2026-11-06T06:54:00",
+    "departureTime": "2026-11-06T06:56:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 8,
+    "stopSequence": 8,
+    "arrivalTime": "2026-11-06T07:02:00",
+    "departureTime": "2026-11-06T07:04:00"
+    },
+    {
+    "journeyId": 5,
+    "stationId": 9,
+    "stopSequence": 9,
+    "arrivalTime": "2026-11-06T07:12:00",
+    "departureTime": "2026-11-06T07:30:00"
+    }
+  ]
+}
