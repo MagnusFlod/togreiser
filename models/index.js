@@ -16,6 +16,7 @@ const connection =
   host: process.env.HOST,
   dialect: process.env.DIALECT,
   dialectmodel: process.env.DIALECTMODEL,
+  timezone: '+01:00'
 };
 
 
