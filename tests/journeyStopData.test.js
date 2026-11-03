@@ -52,25 +52,72 @@ describe('JourneyStop-data', () =>
 
     test('Hver togreise skal ha stationId 1 - 9', () =>
     {
-        const stationIds = [];
 
-        const journeyIds = [];
+        const journeys = {};
 
         for(let i = 0; i < journeyStopData.data.length; i++)
         {
-            const journeyId = journeyStopData.data.journeyId;
-            const stationId = journeyStopData.data.stationId;
-            journeyId += journeyIds;
-            stationId += stationIds;
-        }
-        /*
-        for(let i = 0; i < stationIds.length; i++)
-        {
-            if(stationIds[i] !== i + 1)
+            const stationId = journeyStopData.data[i].stationId;
+            const journeyId = journeyStopData.data[i].journeyId;
+            // Hvis journeys IKKE har en nøkkel med verdien av journeyId, så opprettes et tomt array med nøkkel journeyId: 1
+            if(!journeys[journeyId])
             {
-                return false;
+                journeys[journeyId] = [];
             }
-            return true;
-        }*/
+            // Så legges hver stationId til per journeyId-nøkkelverdi
+            // Det blir da totalt 24 nøkler med 9 verdier per nøkkel hvis json-fila er korrekt
+            journeys[journeyId].push(stationId);
+
+        }
+
+        const journeyIds = Object.keys(journeys);
+        
+        // Gå gjennom hver nøkkel i journeys
+        for(let i = 0; i < journeyIds.length; i++)
+        {
+            // Finner hvert array i journeys
+            const journeyIdArray = journeys[journeyIds[i]];
+            
+            // Går gjennom hvert element i hvert array per journeyId-nøkkel
+            for(let j = 0; j < journeyIdArray.length; j++)
+            {
+                // Forventet verdi. j er telleren. journeyIdArray[j] er verdien på indeksen
+                // Den forventer at hver verdi er teller + 1
+                // Første iterasjon = 0 + 1 = 1. StationID: 1
+                expect(journeyIdArray[j]).toBe(j + 1);
+                
+            }
+        }
     });
+
+    test('Hver togreise skal ha stopSequence 1 -9', () =>
+    {
+        const journeys = {};
+
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            const journeyId = journeyStopData.data[i].journeyId;
+            const stop = journeyStopData.data[i].stopSequence;
+
+            if(!journeys[journeyId])
+            {
+                journeys[journeyId] = [];
+            }
+            journeys[journeyId].push(stop);
+        }
+
+        const journeyIds = Object.keys(journeys);
+
+        for(let i = 0; i < journeyIds.length; i++)
+        {
+            const journeyIdArray = journeys[journeyIds[i]];
+
+            for(let j = 0; j < journeyIdArray.length; j++)
+            {
+                expect(journeyIdArray[j]).toBe(j + 1);
+            }
+        }
+    });
+
+    test('')
 });
