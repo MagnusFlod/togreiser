@@ -119,5 +119,32 @@ describe('JourneyStop-data', () =>
         }
     });
 
-    test('')
+    test('En stasjon skal ikke ha avgangstid før ankomsttid', () =>
+    {
+
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            const arrival = new Date(journeyStopData.data[i].arrivalTime);
+            const departure = new Date(journeyStopData.data[i].departureTime);
+
+            expect(departure.getTime()).toBeGreaterThanOrEqual(arrival.getTime());
+        }
+    });
+
+    test('Ankomstid fra en stasjon kan ikke være før ankomstiden på neste stasjon', () =>
+    {
+        for(let i = 0; i < journeyStopData.data.length - 1; i++)
+        {
+            const currentJourney = journeyStopData.data[i].journeyId;
+            const nextJourney = journeyStopData.data[i + 1].journeyId;
+
+            if(currentJourney === nextJourney)
+            {
+                const departure = new Date(journeyStopData.data[i].departureTime);
+                const nextArrival = new Date(journeyStopData.data[i + 1].arrivalTime);
+
+                expect(nextArrival.getTime()).toBeGreaterThanOrEqual(departure.getTime());
+            }
+        }
+    });
 });
