@@ -147,4 +147,77 @@ describe('JourneyStop-data', () =>
             }
         }
     });
+
+    test('Sjekk at alle ankomster og avganger har gyldig dato og tidsformat', () =>
+    {
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            const arrivalDate = journeyStopData.data[i].arrivalTime;
+            const departureDate = journeyStopData.data[i].departureTime;
+            
+            expect(Date.parse(arrivalDate)).not.toBeNaN();
+            expect(Date.parse(departureDate)).not.toBeNaN();
+
+        }
+    });
+
+    test('Alle togreiser skal følge forventede tidsintervaller', () =>
+    {
+        // Lage objekt av journeys
+        const journeys = {};
+
+        // Tidsforskjell mellom ankomster
+        const arrivalOffsets = [0, 10, 27, 40, 45, 50, 54, 62, 72];
+
+        // Tidsforskjell mellom avganger
+        const departureOffsets = [0, 15, 30, 43, 47, 52, 56, 64, 90];
+
+        // Gruppere stoppene etter journeyId
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            // Finner alle journeyId's
+            const journeyId = journeyStopData.data[i].journeyId;
+
+            // Hvis journeys IKKE har en nøkkel som tilsvarer journeyId
+            if(!journeys[journeyId])
+            {
+                // Opprettes et array per nye journeyId
+                journeys[journeyId] = [];
+            }
+
+            // Hver journeyId legges til per index i hvert journeyId-array
+            journeys[journeyId].push(journeyStopData.data[i]);
+        }
+
+        // Henter ut hver nøkkel
+        const journeyIds = Object.keys(journeys);
+
+        // Kontrollere hver togreise
+        for(let i = 0; i < journeyIds.length; i++)
+        {
+            // Finner hver journeyId per journeyArray
+            const journeyStops = journeys[journeyIds[i]];
+
+            // Finner dato og tid på første stopp per journey-arrayer
+            const firstDeparture = Date.parse(journeyStops[0].departureTime);
+
+            // Går gjennom hver stasjon per journeyArray
+            for(let j = 0; j < journeyStops.length; j++)
+            {
+                // Forventet ankomst blir da første avgang + hvert element i arrivalOffsets
+                // Første avgang blir 06:00 + 0 = 06:00
+                // Neste avgang blir 06:00 + 10 = 06:10
+                // Neste blir 006:00 + 27 = 06:27
+                const expectedArrival = firstDeparture + arrivalOffsets[j] * 60000;
+
+                // Samme prinsipp
+                // 06:00 + 15 = 06:15 osv
+                const expectedDeparture = firstDeparture + departureOffsets[j] * 60000;
+
+                expect(Date.parse(journeyStops[j].arrivalTime)).toBe(expectedArrival);
+
+                expect(Date.parse(journeyStops[j].departureTime)).toBe(expectedDeparture);
+            }
+        }
+    });
 });
