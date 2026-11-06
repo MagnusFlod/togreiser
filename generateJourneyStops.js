@@ -14,12 +14,12 @@ for(let i = 0; i < journeyData.data.length; i++)
 
     const journeyId = i + 1;
 
+    const firstDeparture = Date.parse(journeyDate + 'Z');
+
     for(let j = 0; j < arrivalOffsets.length; j++)
     {
         const stationId = j + 1;
         const stopSequence = j + 1;
-        // What??
-        const firstDeparture = Date.parse(journeyDate + 'Z');
         const expectedArrival = firstDeparture + arrivalOffsets[j] * 60000;
         const expectedDeparture = firstDeparture + departureOffsets[j] * 60000;
 
@@ -41,4 +41,9 @@ for(let i = 0; i < journeyData.data.length; i++)
     
 }
 
-console.log(journeyStopData);
+fs.writeFileSync
+(
+    './journeyStopDataGenerated.json',
+    JSON.stringify({ data: journeyStopData }, null, 2)
+);
+
