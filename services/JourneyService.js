@@ -1,3 +1,5 @@
+const { where } = require("sequelize");
+
 class JourneyService
 {
     constructor(db)
@@ -51,9 +53,24 @@ class JourneyService
 
     async getJourneysBetweenStations(from, to, date)
     {
-        return this.Journey.findOne
+        const fromStops = await this.JourneyStop.findAll
         ({
-            where: { from: station }
+            where: { stationId: from}
+        });
+
+        const toStops = await this.JourneyStop.findAll
+        ({
+            where: { stationId: to }
+        });
+
+        for(let i = 0; i < fromStops.length; i++)
+        {
+            console.log(fromStops[i].journeyId);
+        }
+
+        return this.Journey.findAll
+        ({
+            where: { journeyDate: date }
         });
     }
 }

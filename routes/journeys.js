@@ -30,7 +30,7 @@ router.get('/', async function(res, res, next)
     {
         const journeys = await journeyService.getAllJourneysWithJourneyStopData();
         return res.status(200).json({ "status": "success", "statuscode": 200,
-        "data": {"result": "Here is data for all journey"}, journeys });
+        "data": {"result": "Here is data for every journey"}, journeys });
     }
     catch(err)
     {
