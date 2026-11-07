@@ -5,7 +5,27 @@ const JourneyService = require('../services/JourneyService.js');
 const db = require('../models');
 const journeyService = new JourneyService(db);
 const JourneyStopService = require('../services/JourneyStopService.js');
-const journeyStopService = new journeyStopService(db);
+const journeyStopService = new JourneyStopService(db);
+
+router.get('/search', async function(req, res, next)
+{
+    try
+    {
+        const { from, to, date } = req.query;
+
+        const journeys = await journeyService.getJourneysBetweenStations(from, to, date);
+
+        return res.status(200).json
+        ({
+            status: "success",
+            data: journeys
+        });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
 
 router.get('/:id', async function(req, res, next)
 {
@@ -37,5 +57,6 @@ router.get('/', async function(res, res, next)
         return next(err);
     }
 });
+
 
 module.exports = router;

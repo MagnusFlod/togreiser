@@ -1,5 +1,3 @@
-const { where } = require("sequelize");
-
 class JourneyService
 {
     constructor(db)
@@ -63,9 +61,17 @@ class JourneyService
             where: { stationId: to }
         });
 
+        const matchingJourneyIds = [];
+
         for(let i = 0; i < fromStops.length; i++)
         {
-            console.log(fromStops[i].journeyId);
+            for(let j = 0; j < toStops.length; j++)
+            {
+                if(fromStops[i].journeyId === toStops[j].journeyId)
+                {
+                    matchingJourneyIds.push(fromStops[i].journeyId);
+                }
+            }
         }
 
         return this.Journey.findAll
