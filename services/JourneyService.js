@@ -1,3 +1,5 @@
+const { Op, where } = require('sequelize');
+
 class JourneyService
 {
     constructor(db)
@@ -51,23 +53,36 @@ class JourneyService
 
     async getJourneysBetweenStations(from, to, date)
     {
+        // Finner alle journeyStops med en spesifikk stationId. F.eks Eidsvoll
         const fromStops = await this.JourneyStop.findAll
         ({
             where: { stationId: from}
         });
 
+        // Finner alle journeyStops med en annen spesifikk stationId. F.eks Gardermoen
         const toStops = await this.JourneyStop.findAll
         ({
             where: { stationId: to }
         });
 
+        const startOfDay = new Date(date);
+
+        const startOfNextDay = new Date(date);
+        startOfNextDay.setDate(startOfNextDay.getDate() + 1);
+
+        // Lager et tomt array som senere skal inneholde alle journeyIds som matcher stationIds
         const matchingJourneyIds = [];
 
         for(let i = 0; i < fromStops.length; i++)
         {
             for(let j = 0; j < toStops.length; j++)
             {
-                if(fromStops[i].journeyId === toStops[j].journeyId)
+                if(
+                    fromStops[i].journeyId === toStops[j].journeyId &&
+                    fromStops[i].stopSequence < toStops[j].stopSequence &&
+                    // Undersøker om samme journeyId allerede finnes i arrayet
+                    !matchingJourneyIds.includes(fromStops[i].journeyId)
+                )
                 {
                     matchingJourneyIds.push(fromStops[i].journeyId);
                 }
@@ -76,7 +91,41 @@ class JourneyService
 
         return this.Journey.findAll
         ({
-            where: { journeyDate: date }
+            where:
+            {
+                id:
+                {
+                    // Op.in: Henter rader der id finnes i matchingJourneyIds-arrayen.
+                    [Op.in]: matchingJourneyIds
+                },
+                journeyDate:
+                {
+                    // Op.gte: Datoen må være større enn eller lik starten på dagen.
+                    [Op.gte]: startOfDay,
+
+                    // Op.lt: Datoen må være mindre enn starten på neste dag.
+                    [Op.lt]: startOfNextDay
+                }
+            },
+            include:
+            [
+                {
+                    model: this.JourneyStop,
+                    where:
+                    {
+                        stationId:
+                        {
+                            [Op.in]: [from, to]
+                        }
+                    },
+                    include:
+                    [
+                        {
+                            model: this.Station
+                        }
+                    ]
+                }
+            ]
         });
     }
 }
