@@ -9,6 +9,11 @@ class JourneyService
         this.Station = db.station;
     }
 
+    async getAllJourneys()
+    {
+        return this.Journey.findAll();
+    }
+
     async getJourneyWithJourneyStopData(id)
     {
         return this.Journey.findOne
