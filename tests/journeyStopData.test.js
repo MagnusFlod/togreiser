@@ -2,9 +2,9 @@ const journeyStopData = require('../journeyStopData.json');
 
 describe('JourneyStop-data', () =>
 {
-    test('skal inneholde nøyaktig 216 stoppoppføringer', () =>
+    test('skal inneholde nøyaktig 432 stoppoppføringer', () =>
     {
-        expect(journeyStopData.data).toHaveLength(216);
+        expect(journeyStopData.data).toHaveLength(432);
     });
 
     test('hver togreise skal ha nøyaktig 9 stopp', () =>
@@ -50,7 +50,7 @@ describe('JourneyStop-data', () =>
         });
     });
 
-    test('Hver togreise skal ha stationId 1 - 9', () =>
+    test('Hver togreise skal ha stationId 1 - 9 og 9 - 1', () =>
     {
 
         const journeys = {};
@@ -84,7 +84,15 @@ describe('JourneyStop-data', () =>
                 // Forventet verdi. j er telleren. journeyIdArray[j] er verdien på indeksen
                 // Den forventer at hver verdi er teller + 1
                 // Første iterasjon = 0 + 1 = 1. StationID: 1
-                expect(journeyIdArray[j]).toBe(j + 1);
+                // Motsatt går telleren fra station 9 og ned
+                if(Number(journeyIds[i]) <= 24)
+                {
+                    expect(journeyIdArray[j]).toBe(j + 1);
+                }
+                else
+                {
+                    expect(journeyIdArray[j]).toBe(9 - j);
+                }
                 
             }
         }
@@ -178,19 +186,25 @@ describe('JourneyStop-data', () =>
             // Finner alle journeyId's
             const journeyId = journeyStopData.data[i].journeyId;
 
-            // Hvis journeys IKKE har en nøkkel som tilsvarer journeyId
-            if(!journeys[journeyId])
+            if(journeyId >= 1 && journeyId <= 24)
             {
-                // Opprettes et array per nye journeyId
-                journeys[journeyId] = [];
+                // Hvis journeys IKKE har en nøkkel som tilsvarer journeyId
+                if(!journeys[journeyId])
+                {
+                    // Opprettes et array per nye journeyId
+                    journeys[journeyId] = [];
+                }
+    
+                // Hver journeyId legges til per index i hvert journeyId-array
+                journeys[journeyId].push(journeyStopData.data[i]);
             }
-
-            // Hver journeyId legges til per index i hvert journeyId-array
-            journeys[journeyId].push(journeyStopData.data[i]);
+        
         }
 
         // Henter ut hver nøkkel
         const journeyIds = Object.keys(journeys);
+
+        expect(journeyIds).toHaveLength(24);
 
         // Kontrollere hver togreise
         for(let i = 0; i < journeyIds.length; i++)
@@ -218,6 +232,84 @@ describe('JourneyStop-data', () =>
 
                 expect(Date.parse(journeyStops[j].departureTime)).toBe(expectedDeparture);
             }
+        }
+    });
+
+    test('Sjekk at alle ankomster og avganger har gyldig dato og tidsformat', () =>
+    {
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            const arrivalDate = journeyStopData.data[i].arrivalTime;
+            const departureDate = journeyStopData.data[i].departureTime;
+            
+            expect(Date.parse(arrivalDate)).not.toBeNaN();
+            expect(Date.parse(departureDate)).not.toBeNaN();
+
+        }
+    });
+
+    test('Alle togreiser skal følge forventede tidsintervaller for returtid', () =>
+    {
+        // Lage objekt av journeys
+        const journeys = {};
+
+        // Tidsforskjell mellom ankomster
+        const arrivalOffsets = [0, 6, 13, 19, 26, 34, 49, 64, 79];
+
+        const departureOffsets = [0, 8, 15, 22, 28, 38, 52, 66, 90];
+
+        // Gruppere stoppene etter journeyId
+        for(let i = 0; i < journeyStopData.data.length; i++)
+        {
+            if(journeyStopData.data[i].journeyId >= 25 && journeyStopData.data[i].journeyId <= 48)
+            {
+                // Finner alle journeyId's
+                const journeyId = journeyStopData.data[i].journeyId;
+    
+                // Hvis journeys IKKE har en nøkkel som tilsvarer journeyId
+                if(!journeys[journeyId])
+                {
+                    // Opprettes et array per nye journeyId
+                    journeys[journeyId] = [];
+                }
+    
+                // Hver journeyId legges til per index i hvert journeyId-array
+                journeys[journeyId].push(journeyStopData.data[i]);
+            }
+        }
+
+        // Henter ut hver nøkkel
+        const journeyIds = Object.keys(journeys);
+
+        expect(journeyIds).toHaveLength(24);
+
+        // Kontrollere hver togreise
+        for(let i = 0; i < journeyIds.length; i++)
+        {
+            // Finner hver journeyId per journeyArray
+            const journeyStops = journeys[journeyIds[i]];
+
+            // Finner dato og tid på første stopp per journey-arrayer
+            const firstDeparture = Date.parse(journeyStops[0].departureTime);
+
+            // Går gjennom hver stasjon per journeyArray
+            for(let j = 0; j < journeyStops.length; j++)
+            {
+                // Forventet ankomst blir da første avgang + hvert element i arrivalOffsets
+                // Første avgang blir 06:00 + 0 = 06:00
+                // Neste avgang blir 06:00 + 10 = 06:10
+                // Neste blir 006:00 + 27 = 06:27
+                const expectedArrival = firstDeparture + arrivalOffsets[j] * 60000;
+
+                // Samme prinsipp
+                // 06:00 + 15 = 06:15 osv
+                const expectedDeparture = firstDeparture + departureOffsets[j] * 60000;
+
+                expect(Date.parse(journeyStops[j].arrivalTime)).toBe(expectedArrival);
+
+                expect(Date.parse(journeyStops[j].departureTime)).toBe(expectedDeparture);
+            }
+            
         }
     });
 });

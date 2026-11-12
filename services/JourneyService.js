@@ -1,5 +1,3 @@
-const { Op, where } = require('sequelize');
-
 class JourneyService
 {
     constructor(db)
