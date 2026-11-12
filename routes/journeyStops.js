@@ -26,5 +26,63 @@ router.post('/', isAuthenticated, isAdmin, async function(req, res, next)
 });
 
 
+router.put('/:id', isAuthenticated, isAdmin, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const { journeyId, stationId, stopSequence, arrivalTime, departureTime } = req.body;
+
+        const updatedJourneyStop = await journeyStopService.updateJourneyStop
+        ({
+            id,
+            journeyId,
+            stationId,
+            stopSequence,
+            arrivalTime,
+            departureTime
+        });
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "JourneyStop successfully updated!"}, updatedJourneyStop });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
+router.delete('/:id', isAuthenticated, isAdmin, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const deletedJourneyStop = await journeyStopService.deleteJourneyStop(id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "JourneyStop successfully deleted!"}, deletedJourneyStop });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
+router.get('/:id', async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
 
 module.exports = router;

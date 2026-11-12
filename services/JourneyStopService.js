@@ -1,3 +1,5 @@
+const { where } = require("sequelize");
+
 class JourneyStopService
 {
     constructor(db)
@@ -18,19 +20,35 @@ class JourneyStopService
         });
     }
 
-    async updateJourneyStop()
+    async updateJourneyStop({ id, journeyId, stationId, stopSequence, arrivalTime, departureTime })
     {
-        
+        return this.JourneyStop.update(
+        {
+            journeyId: journeyId,
+            stationId: stationId,
+            stopSequence: stopSequence,
+            arrivalTime: arrivalTime,
+            departureTime: departureTime
+        },
+        {
+            where: { id: id }
+        });
     }
 
-    async deleteJourneyStop()
+    async deleteJourneyStop(id)
     {
-
+        return this.Journey.destroy
+        ({
+            where: { id: id }
+        });
     }
 
-    async getJourneyStops(id)
+    async getJourneyStop(id)
     {
-
+        return this.JourneyStop.findOne(
+        {
+            where: { id: id }
+        });
     }
 }
 
