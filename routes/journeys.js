@@ -4,8 +4,6 @@ const { isAuthenticated, isAuthorized, isAdmin } = require('../middlewares/middl
 const JourneyService = require('../services/JourneyService.js');
 const db = require('../models');
 const journeyService = new JourneyService(db);
-const JourneyStopService = require('../services/JourneyStopService.js');
-const journeyStopService = new JourneyStopService(db);
 
 
 // Postman URL: http://localhost:3000/journeys/search?from=1&to=2&date=2026-11-02
@@ -35,6 +33,7 @@ router.get('/search', async function(req, res, next)
     }
 });
 
+
 router.get('/allJourneys', async function(req, res, next)
 {
     try
@@ -48,6 +47,7 @@ router.get('/allJourneys', async function(req, res, next)
         return next(err);
     }
 });
+
 
 router.get('/all-journeyDetails', async function(req, res, next)
 {
@@ -74,6 +74,70 @@ router.get('/:id', async function(req, res, next)
 
         return res.status(200).json({ "status": "success", "statuscode": 200,
         "data": {"result": "Here is data for journey"}, journey });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
+router.post('/', isAuthenticated, isAdmin, async function(req, res, next)
+{
+    try
+    {
+        const { trainId, journeyDate } = req.body;
+
+        const journey = await journeyService.createJourney
+        ({
+            trainId, journeyDate
+        });
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "Journey successfully created"}, journey });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
+router.put('/:id', isAuthenticated, isAdmin, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const { trainId, journeyDate } = req.body;
+
+        const updatedJourney = await journeyService.updateJourney
+        ({
+            id,
+            trainId,
+            journeyDate
+        });
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "Journey successfully updated"}, updatedJourney });
+    }
+    catch(er)
+    {
+        return next(err);
+    }
+});
+
+
+router.delete('/:id', isAuthenticated, isAdmin, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const deletedJourney = await journeyService.deleteJourney(id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "Journey successfully deleted"}, deletedJourney });
     }
     catch(err)
     {

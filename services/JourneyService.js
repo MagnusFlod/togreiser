@@ -133,6 +133,35 @@ class JourneyService
             ]
         });
     }
+
+    async createJourney({ trainId, journeyDate })
+    {
+        return this.Journey.create
+        ({
+            trainId: trainId,
+            journeyDate: journeyDate
+        });
+    }
+
+    async updateJourney({ id, trainId, journeyDate })
+    {
+        return this.Journey.update
+        ({
+            trainId: trainId,
+            journeyDate: journeyDate
+        },
+        {
+            where: { id: id }
+        });
+    }
+
+    async deleteJourney(id)
+    {
+        return this.Journey.destroy
+        ({
+            where: { id: id }
+        });
+    }
 }
 
 module.exports = JourneyService;
