@@ -36,6 +36,42 @@
       "type": "Type72",
       "lengthMeters": 200,
       "isElectric": true
+    },
+    {
+      "trainNumber": "106",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
+      "trainNumber": "107",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
+      "trainNumber": "108",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
+      "trainNumber": "109",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
+      "trainNumber": "110",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
+    },
+    {
+      "trainNumber": "111",
+      "type": "Type72",
+      "lengthMeters": 200,
+      "isElectric": true
     }
   ]
 }

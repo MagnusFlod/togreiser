@@ -1512,6 +1512,69 @@
       "stopSequence": 9,
       "arrivalTime": "2026-11-08T12:12:00",
       "departureTime": "2026-11-08T12:30:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 9,
+      "stopSequence": 1,
+      "arrivalTime": "2026-11-02T06:00:00",
+      "departureTime": "2026-11-02T06:00:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 8,
+      "stopSequence": 2,
+      "arrivalTime": "2026-11-02T06:06:00",
+      "departureTime": "2026-11-02T06:08:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 7,
+      "stopSequence": 3,
+      "arrivalTime": "2026-11-02T06:13:00",
+      "departureTime": "2026-11-02T06:15:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 6,
+      "stopSequence": 4,
+      "arrivalTime": "2026-11-02T06:19:00",
+      "departureTime": "2026-11-02T06:22:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 5,
+      "stopSequence": 5,
+      "arrivalTime": "2026-11-02T06:26:00",
+      "departureTime": "2026-11-02T06:28:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 4,
+      "stopSequence": 6,
+      "arrivalTime": "2026-11-02T06:34:00",
+      "departureTime": "2026-11-02T06:38:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 3,
+      "stopSequence": 7,
+      "arrivalTime": "2026-11-02T06:49:00",
+      "departureTime": "2026-11-02T06:52:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 2,
+      "stopSequence": 8,
+      "arrivalTime": "2026-11-02T07:04:00",
+      "departureTime": "2026-11-02T07:06:00"
+    },
+    {
+      "journeyId": 25,
+      "stationId": 1,
+      "stopSequence": 9,
+      "arrivalTime": "2026-11-02T07:19:00",
+      "departureTime": "2026-11-02T07:30:00"
     }
   ]
 }

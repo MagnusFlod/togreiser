@@ -77,6 +77,11 @@ router.get('/:id', async function(req, res, next)
     try
     {
         const id = req.params.id;
+
+        const journeyStop = await journeyStopService.getJourneyStop(id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "JourneyStop found!"}, journeyStop });
     }
     catch(err)
     {

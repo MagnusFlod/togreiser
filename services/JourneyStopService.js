@@ -1,5 +1,3 @@
-const { where } = require("sequelize");
-
 class JourneyStopService
 {
     constructor(db)
@@ -10,7 +8,7 @@ class JourneyStopService
 
     async createJourneyStop({ journeyId, stationId, stopSequence, arrivalTime, departureTime })
     {
-        return this.journeyStop.create
+        return this.JourneyStop.create
         ({
             journeyId: journeyId,
             stationId: stationId,
@@ -37,7 +35,7 @@ class JourneyStopService
 
     async deleteJourneyStop(id)
     {
-        return this.Journey.destroy
+        return this.JourneyStop.destroy
         ({
             where: { id: id }
         });
