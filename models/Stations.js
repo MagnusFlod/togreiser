@@ -29,6 +29,16 @@ module.exports = (sequelize, Sequelize) =>
         {
             foreignKey: 'stationId'
         });
+
+        station.hasMany(models.ticket,
+        {
+            foreignKey: 'fromStationId'
+        });
+
+        station.hasMany(models.ticket,
+        {
+            foreignKey: 'toStationId'
+        });
     };
 
     return station;

@@ -28,6 +28,11 @@ module.exports = (sequelize, Sequelize) =>
         {
             foreignKey: 'journeyId'
         });
+
+        journey.hasMany(models.ticket,
+        {
+            foreignKey: 'journeyId'
+        });
     };
 
     return journey;

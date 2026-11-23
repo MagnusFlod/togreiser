@@ -33,5 +33,13 @@ module.exports = (sequelize, Sequelize) =>
         }
     );
 
+    user.associate = function(models)
+    {
+        user.hasMany(models.ticket,
+        {
+            foreignKey: 'userId'
+        });
+    }
+
     return user;
 }
