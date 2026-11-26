@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const crypto = require('crypto');
 
 class TicketService
 {
@@ -11,17 +11,44 @@ class TicketService
         this.ToStation = db.station;
     }
 
-    async makeTicket({ username, journeyId, fromStationId, toStationId })
+    async makeTicket({ userId, journeyId, fromStationId, toStationId })
     {
-        const user = await this.User.findOne({ where: { username: username } });
-        const journeyId = await this.Journey.findOne({ where: { journeyId: journeyId }});
-        const fromStation = await this.FromStation.findOne({ where: { fromStationId: fromStationId } });
-        const toStation = await this.ToStation.findOne({ where: { toStationId: toStationId } });
+        const user = await this.User.findOne({ where: { id: userId } });
+        const journey = await this.Journey.findOne({ where: { id: journeyId }});
+        const fromStation = await this.FromStation.findOne({ where: { id: fromStationId } });
+        const toStation = await this.ToStation.findOne({ where: { id: toStationId } });
 
+        if (!user || !journey || !fromStation || !toStation)
+        {
+            throw new Error("Invalid user, journey or station");
+        }
+
+        const ticketCode = crypto.randomUUID();
+
+        // Setter nåværende tidspunkt
+        const now = Date.now();
+
+        // Beregner 1,5 time varighet for biletten
+        const lastingTime = 90 * 60 * 1000;
+
+        const purchaseDate = new Date(now);
+        const expirationDate = new Date(now + lastingTime);
+        
+        const status = true;
+        
         const ticket = await this.Ticket.create
         ({
-            
-        })
+            userId: user.id,
+            journeyId: journey.id,
+            fromStationId: fromStation.id,
+            toStationId: toStation.id,
+            ticketCode: ticketCode,
+            purchaseDate: purchaseDate,
+            status: status,
+            expirationDate: expirationDate
+        });
+
+        return ticket;
     }
 }
 

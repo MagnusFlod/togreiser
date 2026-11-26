@@ -24,6 +24,7 @@ var trainsRouter = require('./routes/trains');
 var stationsRouter = require('./routes/stations');
 var journeyRouter = require('./routes/journeys');
 var journeyStopRouter = require('./routes/journeyStops');
+var ticketsRouter = require('./routes/tickets');
 
 // Kaller funksjonen express() og lagrer det express returnerer i app
 // app inneholder da Express-applikasjonen som funksjonen opprettet
@@ -73,6 +74,7 @@ app.use('/trains', trainsRouter);
 app.use('/stations', stationsRouter);
 app.use('/journeys', journeyRouter);
 app.use('/journeyStops', journeyStopRouter);
+app.use('/tickets', ticketsRouter);
 
 // Eksporterer den konfigurerte Express-applikasjonen,
 // slik at andre filer kan importere og bruke den.
