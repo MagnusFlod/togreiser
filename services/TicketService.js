@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const { stat } = require('fs');
+const { where } = require('sequelize');
 
 class TicketService
 {
@@ -74,6 +76,29 @@ class TicketService
             status: status,
             expirationDate: expirationDate
         });
+
+        return ticket;
+    }
+
+    async getTicket(id, userId)
+    {
+        const ticket = await this.Ticket.findOne(
+        {
+            where: { id: id, userId: userId }
+        });
+
+        if(!ticket)
+        {
+            throw new Error('Ticket is not found');
+        }
+
+        if(Date.now() >= new Date(ticket.expirationDate).getTime())
+        {
+            await ticket.update(
+            {
+                status: false
+            });
+        }
 
         return ticket;
     }

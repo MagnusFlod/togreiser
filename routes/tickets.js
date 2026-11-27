@@ -28,4 +28,23 @@ router.post('/', isAuthenticated, async function(req, res, next)
     }
 });
 
+
+router.get('/:id', isAuthenticated, async function(req, res, next)
+{
+    try
+    {
+        const id = req.params.id;
+
+        const ticket = await ticketService.getTicket(id, req.user.id);
+
+        return res.status(200).json({ "status": "success", "statuscode": 200,
+        "data": {"result": "Here is your ticket"}, ticket });
+    }
+    catch(err)
+    {
+        return next(err);
+    }
+});
+
+
 module.exports = router;
