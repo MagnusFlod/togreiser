@@ -9,18 +9,45 @@ class TicketService
         this.Journey = db.journey;
         this.FromStation = db.station;
         this.ToStation = db.station;
+        this.JourneyStop = db.journeyStop;
     }
 
     async makeTicket({ userId, journeyId, fromStationId, toStationId })
     {
+        
         const user = await this.User.findOne({ where: { id: userId } });
         const journey = await this.Journey.findOne({ where: { id: journeyId }});
         const fromStation = await this.FromStation.findOne({ where: { id: fromStationId } });
         const toStation = await this.ToStation.findOne({ where: { id: toStationId } });
-
+            
         if (!user || !journey || !fromStation || !toStation)
         {
             throw new Error("Invalid user, journey or station");
+        }
+                
+        const fromStop = await this.JourneyStop.findOne
+        ({
+            where:
+            {
+                journeyId: journeyId,
+                stationId: fromStationId
+            }
+        });
+        
+        const toStop = await this.JourneyStop.findOne
+        ({
+            where:
+            {
+                journeyId: journeyId,
+                stationId: toStationId
+            }
+        });
+
+        // Finner ut om brukeren har selektert fra stasjon til stasjon
+        // Finner også at brukeren ikke bestiller en tur feil vei på strekningen
+        if(!fromStop || !toStop || fromStop.stopSequence >= toStop.stopSequence)
+        {
+            throw new Error("Invalid journey route");
         }
 
         const ticketCode = crypto.randomUUID();

@@ -160,7 +160,7 @@ router.post('/login', async function(req, res, next)
                     // A client, for instance Google Chrome does not save the credentials, it saves the token value
                     { id: user.id, email: user.email, role: user.role },
                     process.env.TOKEN_SECRET,
-                    { expiresIn: "1h" }
+                    { expiresIn: "2h" }
                 );
             }
             catch (err)
