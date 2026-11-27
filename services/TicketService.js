@@ -90,6 +90,10 @@ class TicketService
             throw new Error('Ticket is not found');
         }
 
+        // Date.now henter tidspunkt akkurat nå
+        // new Date(ticket.expirationDate) lager et Date objekt fra utløpstiden som er lagret på billetten
+        // getTime() konverterer dette tidspunktet til millisekunder siden 1. januar 1970
+        // Sammenligner de to tidene. Hvis nåværende tidspunkt er lik eller større enn utløpstiden så blir status: false
         if(Date.now() >= new Date(ticket.expirationDate).getTime())
         {
             await ticket.update(
