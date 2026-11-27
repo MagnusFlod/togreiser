@@ -1,6 +1,4 @@
 const crypto = require('crypto');
-const { stat } = require('fs');
-const { where } = require('sequelize');
 
 class TicketService
 {
