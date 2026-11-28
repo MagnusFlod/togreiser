@@ -104,6 +104,11 @@ class TicketService
 
         return ticket;
     }
+
+    async calculatePrice()
+    {
+        
+    }
 }
 
 module.exports = TicketService;
